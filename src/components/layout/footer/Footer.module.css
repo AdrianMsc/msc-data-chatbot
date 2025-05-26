@@ -1,0 +1,59 @@
+/* Footer.module.css - converted from Tailwind CSS */
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	padding: 1rem 1.5rem;
+	background-color: #ffffff;
+	justify-content: space-between;
+	height: fit-content;
+}
+
+@media (min-width: 768px) {
+	.footer {
+		flex-direction: row;
+		padding-left: 3.75rem;
+		padding-right: 3.75rem;
+		align-items: flex-end;
+	}
+}
+
+@media (min-width: 1280px) {
+	.footer {
+		padding-left: 5rem;
+		padding-right: 5rem;
+	}
+}
+
+.footerFeedback {
+	order: unset;
+}
+
+@media (min-width: 768px) {
+	.footerFeedback {
+		order: 2;
+	}
+}
+
+.footerInfo {
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	align-content: center;
+	margin-top: 0.5rem;
+}
+
+.footerInfo p {
+	font-size: 0.75rem; /* text-xs */
+	color: #6b7280; /* text-gray-500 */
+	white-space: nowrap;
+	align-self: center;
+}
+
+.footerDivider {
+	border-left: 1px solid #9ca3af; /* border-gray-400 */
+	margin-left: 0.75rem;
+	margin-right: 0.75rem;
+}
