@@ -1,0 +1,22 @@
+.faqCard {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 280px;
+	max-height: 100px;
+	padding: 1rem;
+	font-size: 0.9rem;
+	border-radius: 8px;
+	background-color: #fff;
+	overflow: hidden;
+}
+
+.faqTitle {
+	font-size: 1.1rem;
+	font-weight: bold;
+}
+
+.faqDesc {
+	font-size: 0.9rem;
+	color: #949494;
+}
