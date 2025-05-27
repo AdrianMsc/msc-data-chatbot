@@ -1,10 +1,9 @@
 import FaqContainer from '../../core/faq/FaqContainer';
 import InputChat from '../../core/inputChat/InputChat';
-import styles from './Chat.module.css';
 
 const Chat = () => {
 	return (
-		<section className={styles.mainContainer}>
+		<section className="flex flex-col items-center place-content-end md:place-content-between flex-1 w-full h-full p-8 flex-nowrap">
 			<FaqContainer />
 			<InputChat />
 		</section>

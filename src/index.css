@@ -1,3 +1,8 @@
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* reset-normalize.css */
 
 /* 1. Reset margins, paddings, borders, and set box-sizing */

@@ -1,13 +1,12 @@
 import MscLogo from '../../../assets/brand/MscLogo';
-import styles from './Header.module.css';
 
 const Header: React.FC = () => {
 	return (
-		<header className={styles.navbar}>
-			<div className={styles.navbarInner}>
+		<header className="bg-white shadow-sm py-4 px-5 flex flex-row w-full justify-between items-center sticky top-0 z-40">
+			<div className="flex flex-row items-center gap-4 sm:gap-28 lg:gap-[6.6rem] xl:gap-[9.5rem]">
 				<MscLogo />
 			</div>
-			<div className={styles.navbarActions}>{/* your action buttons here */}</div>
+			<div className="flex items-center gap-5">{/* your action buttons here */}</div>
 		</header>
 	);
 };
