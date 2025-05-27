@@ -1,6 +1,6 @@
 const InputChat = () => {
 	return (
-		<div className="flex flex-col w-[80%] lg:w-[70%] xl:w-[50%] h-[100px] p-2 bg-white border border-gray-300 rounded-2xl gap-2">
+		<div className="flex flex-col w-full lg:w-[80%] xl:w-[70%] h-[100px] p-2 bg-white border border-gray-300 rounded-2xl gap-2">
 			<input
 				type="text"
 				placeholder="Ask anything"
@@ -8,7 +8,7 @@ const InputChat = () => {
 			/>
 			<button
 				type="submit"
-				className="self-end px-4 py-1 w-fit h-fit bg-primary-blue text-white border-none rounded-lg cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200"
+				className="self-end px-4 py-1 w-fit h-fit bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200"
 			>
 				Send
 			</button>
