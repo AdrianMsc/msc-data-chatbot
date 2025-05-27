@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+	--color-mint-500: oklch(0.72 0.11 178);
+}
 /* reset-normalize.css */
 
 /* 1. Reset margins, paddings, borders, and set box-sizing */
