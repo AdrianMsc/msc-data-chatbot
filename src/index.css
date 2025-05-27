@@ -6,6 +6,26 @@
 @theme {
 	--color-mint-500: oklch(0.72 0.11 178);
 }
+
+/* Custom styles */
+
+/* ChatMessage.css */
+
+.chat-message {
+	/* start invisible & down */
+	opacity: 0;
+	transform: translateY(20px);
+	/* animate to final state */
+	animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
 /* reset-normalize.css */
 
 /* 1. Reset margins, paddings, borders, and set box-sizing */
@@ -181,4 +201,6 @@ textarea {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	scroll-behavior: smooth;
 }
