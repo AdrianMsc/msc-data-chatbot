@@ -1,6 +1,6 @@
 const InputChat = () => {
 	return (
-		<div className="flex flex-col w-[80%] lg:w-[60%] h-[100px] p-2 bg-white border border-gray-300 rounded-2xl gap-2">
+		<div className="flex flex-col w-[80%] lg:w-[50%] h-[100px] p-2 bg-white border border-gray-300 rounded-2xl gap-2">
 			<input
 				type="text"
 				placeholder="Ask anything"
