@@ -22,15 +22,12 @@ const Chat = () => {
 	};
 
 	return (
-		<section className="flex flex-col items-center flex-1 w-full h-full py-8 flex-nowrap overflow-hidden">
+		<section className="flex flex-col items-center flex-1 w-full h-full pb-4 flex-nowrap overflow-hidden">
 			<div className="w-[80%] h-full flex flex-col items-center place-content-end md:place-content-between overflow-hidden gap-4">
 				{/* Header with clear button */}
 				{messages.length > 0 && (
 					<div className="w-full flex justify-end mb-2">
-						<button
-							onClick={handleClearChat}
-							className="text-sm text-gray-500 hover:text-red-500 transition-colors"
-						>
+						<button onClick={handleClearChat} className="text-sm text-gray-500 hover:text-red-500 transition-colors">
 							Clear Chat
 						</button>
 					</div>
@@ -49,10 +46,7 @@ const Chat = () => {
 								>
 									Cancel
 								</button>
-								<button
-									onClick={confirmClear}
-									className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
-								>
+								<button onClick={confirmClear} className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">
 									Clear
 								</button>
 							</div>
