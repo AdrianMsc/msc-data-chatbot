@@ -22,7 +22,8 @@ const InputChat = () => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex flex-col w-full lg:w-[80%] xl:w-[70%] h-[100px] p-2 bg-white border border-gray-300 rounded-2xl gap-2"
+			className="flex flex-col w-[80%] xl:w-[70%] h-[100px] p-2 bg-white rounded-2xl gap-2"
+			style={{ border: '1px solid #DBDBDB' }}
 		>
 			<input
 				type="text"
@@ -32,13 +33,15 @@ const InputChat = () => {
 				className="w-auto h-full px-3 placeholder:text-start placeholder:text-gray-400"
 				disabled={isLoading}
 			/>
-			<button
-				type="submit"
-				className="self-end px-4 py-1 w-fit h-fit bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
-				disabled={!inputValue.trim() || isLoading}
-			>
-				{isLoading ? 'Sending...' : 'Send'}
-			</button>
+			<div className="flex flex-row items-center justify-end gap-2 w-full h-full">
+				<button
+					type="submit"
+					className="self-end px-4 py-1 w-fit h-fit bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+					disabled={!inputValue.trim() || isLoading}
+				>
+					{isLoading ? 'Sending...' : 'Send'}
+				</button>
+			</div>
 		</form>
 	);
 };

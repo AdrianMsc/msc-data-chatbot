@@ -3,6 +3,7 @@ import ChatAnswer from './ChatAnswer';
 import ChatMessage from './ChatMessage';
 import useChat from '../../../hooks/useChat';
 import { deserializeMessage } from '../../../utils/dateUtils';
+import FaqContainer from '../faq/FaqContainer';
 
 const ChatContainer = () => {
 	const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -18,10 +19,10 @@ const ChatContainer = () => {
 	return (
 		<div
 			ref={chatContainerRef}
-			className="flex flex-col w-full lg:w-[80%] xl:w-[70%] h-full gap-4 flex-nowrap overflow-y-scroll overflow-x-hidden"
+			className="flex flex-col items-center pt-8 w-full lg:w-[90%] h-full gap-4 flex-nowrap overflow-y-scroll overflow-x-hidden"
 		>
 			{messages.length === 0 ? (
-				<div className="text-center text-gray-500 my-4">Start a conversation by typing a message below.</div>
+				<FaqContainer />
 			) : (
 				messages.map((message) => {
 					const processedMessage = deserializeMessage(message);
