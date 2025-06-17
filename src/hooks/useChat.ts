@@ -5,15 +5,16 @@ import type { RootState } from '../store/store';
 import type { IMessage } from '../types/message';
 import { serializeMessage } from '../utils/dateUtils';
 import { sendMessage } from '../api/sendMessage';
+import { sqlInjectionDetector } from '../utils/message/sqlInjectionDetector';
 
 export const useChat = () => {
 	const dispatch = useDispatch();
 	const { messages, isLoading, error } = useSelector((state: RootState) => state.chat);
 
-	// Send a user message and simulate a bot response
 	const handleMessage = useCallback(
-		(content: string) => {
+		async (content: string) => {
 			if (!content.trim()) return;
+			if (sqlInjectionDetector(content) === true) return; // Prevent SQL injection attempts
 
 			// Create and add user message
 			const userMessage: IMessage = {
@@ -24,19 +25,18 @@ export const useChat = () => {
 				timestamp: new Date()
 			};
 
-			sendMessage(userMessage);
+			const response: any = await sendMessage(userMessage);
 
 			dispatch(addMessage(serializeMessage(userMessage)));
 
 			// Set loading state while "waiting" for bot response
 			dispatch(setLoading(true));
 
-			// Simulate bot response (replace with actual API call in production)
 			setTimeout(() => {
 				const botMessage: IMessage = {
 					id: (Date.now() + 1).toString(),
-					auth: 'user', // Optional, can be removed if not needed
-					content: `This is a simulated response to: "${content.trim()}"`,
+					auth: 'auth-token', // Optional, can be removed if not needed
+					content: response?.content || '',
 					sender: 'bot',
 					timestamp: new Date()
 				};

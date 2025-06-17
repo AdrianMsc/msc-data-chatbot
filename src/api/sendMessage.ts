@@ -16,7 +16,7 @@ export const sendMessage = async (message: IMessage): Promise<void> => {
 		}
 
 		const data = await response.json();
-		console.log('Message sent successfully:', data);
+		return data;
 	} catch (error) {
 		console.error('Error sending message:', error);
 	}
