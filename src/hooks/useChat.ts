@@ -25,25 +25,22 @@ export const useChat = () => {
 				timestamp: new Date()
 			};
 
-			const response: any = await sendMessage(userMessage);
-
 			dispatch(addMessage(serializeMessage(userMessage)));
-
 			// Set loading state while "waiting" for bot response
 			dispatch(setLoading(true));
 
-			setTimeout(() => {
-				const botMessage: IMessage = {
-					id: (Date.now() + 1).toString(),
-					auth: 'auth-token', // Optional, can be removed if not needed
-					content: response?.content || '',
-					sender: 'bot',
-					timestamp: new Date()
-				};
+			const response: any = await sendMessage(userMessage);
 
-				dispatch(addMessage(serializeMessage(botMessage)));
-				dispatch(setLoading(false));
-			}, 1000);
+			const botMessage: IMessage = {
+				id: (Date.now() + 1).toString(),
+				auth: 'auth-token', // Optional, can be removed if not needed
+				content: response?.content || '',
+				sender: 'bot',
+				timestamp: new Date()
+			};
+
+			dispatch(addMessage(serializeMessage(botMessage)));
+			dispatch(setLoading(false));
 		},
 		[dispatch]
 	);
