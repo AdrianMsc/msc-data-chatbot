@@ -2,14 +2,17 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import useChat from "../../hooks/useChat";
 
 const LogoutButton = () => {
+  const { clearChat } = useChat();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login"); // Redirige al login después de cerrar sesión
+    clearChat();
   };
 
   return (

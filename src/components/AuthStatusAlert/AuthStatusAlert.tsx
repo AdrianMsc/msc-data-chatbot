@@ -12,9 +12,9 @@ const AuthStatusAlert = () => {
   useEffect(() => {
     if (isAuthenticated) {
       setIsVisible(true);
-      // setTimeout(() => {
-      //   setIsVisible(false);
-      // }, 3000);
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
     } else {
       setIsVisible(false);
     }
@@ -27,8 +27,7 @@ const AuthStatusAlert = () => {
       }`}
       role="alert"
     >
-      <span className="font-medium">¡Autenticado!</span> Ya estás logueado y
-      listo.
+      <span className="font-medium">Authenticated!</span>
     </div>
   ) : (
     <div
