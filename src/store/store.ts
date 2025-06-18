@@ -1,18 +1,19 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import chatReducer from './chatSlice';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import chatReducer from "./chatSlice";
+import authReducer from "./authSlice"; // Agregado para autenticación
 
 // Configure Redux Persist
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['chat'], // only chat will be persisted
+  whitelist: ["chat", "auth"], // Persistimos también auth
 };
 
 const rootReducer = combineReducers({
   chat: chatReducer,
-  // Add other reducers here as needed
+  auth: authReducer, // Agregado aquí
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -23,11 +24,11 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore these action types
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
         // Ignore these field paths in all actions
-        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+        ignoredActionPaths: ["meta.arg", "payload.timestamp"],
         // Ignore these paths in the state
-        ignoredPaths: ['chat.messages'],
+        ignoredPaths: ["chat.messages"],
       },
     }),
 });
