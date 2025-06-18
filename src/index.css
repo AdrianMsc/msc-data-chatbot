@@ -1,3 +1,4 @@
+@import 'github-markdown-css/github-markdown.css';
 /* Tailwind CSS directives */
 @tailwind base;
 @tailwind components;
@@ -5,6 +6,10 @@
 
 @theme {
 	--color-mint-500: oklch(0.72 0.11 178);
+}
+
+.markdown-body {
+	padding: 1rem;
 }
 
 /* Custom styles */
