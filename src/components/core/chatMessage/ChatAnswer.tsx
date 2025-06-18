@@ -1,11 +1,27 @@
-import type { Message } from '../../../types/message';
+// ChatAnswer.tsx
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import type { IMessage } from '../../../types/message';
 
 interface ChatAnswerProps {
-	message: Message;
+	message: IMessage;
 }
 
-const ChatAnswer = ({ message }: ChatAnswerProps) => {
-	return <div className="w-fit h-fit px-3 py-2 bg-gray-100 self-start rounded-lg chat-message">{message.content}</div>;
+const ChatAnswer: React.FC<ChatAnswerProps> = ({ message }) => {
+	return (
+		<div className="prose min-w-full">
+			<ReactMarkdown
+				// enable GFM (tables, strikethrough, task lists, etc.)
+				remarkPlugins={[remarkGfm]}
+				// allow any raw HTML the AI might send
+				rehypePlugins={[rehypeRaw]}
+			>
+				{message.content}
+			</ReactMarkdown>
+		</div>
+	);
 };
 
 export default ChatAnswer;

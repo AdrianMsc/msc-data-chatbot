@@ -7,5 +7,5 @@ export default {
 		colors,
 		extend: {}
 	},
-	plugins: []
+	plugins: [require('@tailwindcss/typography')]
 };
