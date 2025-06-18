@@ -11,7 +11,7 @@ interface ChatAnswerProps {
 
 const ChatAnswer: React.FC<ChatAnswerProps> = ({ message }) => {
 	return (
-		<div className="prose prose-sm max-w-full bg-gray-50 p-4 rounded-lg">
+		<div className="prose min-w-full">
 			<ReactMarkdown
 				// enable GFM (tables, strikethrough, task lists, etc.)
 				remarkPlugins={[remarkGfm]}

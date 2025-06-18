@@ -19,7 +19,7 @@ const ChatContainer = () => {
 	return (
 		<div
 			ref={chatContainerRef}
-			className="flex flex-col items-center pt-8 w-full lg:w-[90%] h-full gap-4 flex-nowrap overflow-y-scroll overflow-x-hidden"
+			className="flex flex-col items-start pt-8 w-[80%] xl:w-[70%] h-full gap-4 flex-nowrap overflow-y-scroll overflow-x-hidden"
 		>
 			{messages.length === 0 ? (
 				<FaqContainer />

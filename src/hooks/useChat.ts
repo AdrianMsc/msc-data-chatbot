@@ -39,13 +39,16 @@ export const useChat = () => {
 			dispatch(addMessage(serializeMessage(botMessage)));
 
 			try {
+				let receivedFirstChunk = false;
 				await sendMessageStream(userMessage, (partialText) => {
 					dispatch(updateLastBotMessage(partialText));
+					if (!receivedFirstChunk) {
+						dispatch(setLoading(false));
+						receivedFirstChunk = true;
+					}
 				});
 			} catch (error) {
 				dispatch(setError((error as Error).message));
-			} finally {
-				dispatch(setLoading(false));
 			}
 		},
 		[dispatch, messages]

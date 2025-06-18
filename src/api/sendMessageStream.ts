@@ -52,7 +52,7 @@ export const sendMessageStream = async (message: IMessage, onChunk: (text: strin
 						for (const char of textChunk) {
 							fullText += char;
 							onChunk(fullText);
-							await new Promise((resolve) => setTimeout(resolve, 15));
+							await new Promise((resolve) => setTimeout(resolve, 10));
 						}
 					} catch (e) {
 						console.error('Failed to parse SSE chunk:', e, dataLine);
