@@ -24,6 +24,14 @@ export const chatSlice = createSlice({
 		setMessages: (state, action: PayloadAction<IMessage[]>) => {
 			state.messages = action.payload;
 		},
+		updateLastBotMessage: (state, action: PayloadAction<string>) => {
+			const lastBotIndex = [...state.messages].reverse().findIndex((m) => m.sender === 'bot');
+
+			if (lastBotIndex !== -1) {
+				const realIndex = state.messages.length - 1 - lastBotIndex;
+				state.messages[realIndex].content = action.payload;
+			}
+		},
 		clearMessages: (state) => {
 			state.messages = [];
 		},
@@ -36,6 +44,6 @@ export const chatSlice = createSlice({
 	}
 });
 
-export const { addMessage, setMessages, clearMessages, setLoading, setError } = chatSlice.actions;
+export const { addMessage, setMessages, updateLastBotMessage, clearMessages, setLoading, setError } = chatSlice.actions;
 
 export default chatSlice.reducer;

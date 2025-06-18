@@ -1,7 +1,7 @@
-import type { Message } from '../../../types/message';
+import type { IMessage } from '../../../types/message';
 
 interface ChatAnswerProps {
-	message: Message;
+	message: IMessage;
 }
 
 const ChatAnswer = ({ message }: ChatAnswerProps) => {

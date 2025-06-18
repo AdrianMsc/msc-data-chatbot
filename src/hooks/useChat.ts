@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, clearMessages, setLoading } from '../store/chatSlice';
+import { addMessage, clearMessages, setError, setLoading, updateLastBotMessage } from '../store/chatSlice';
 import type { RootState } from '../store/store';
 import type { IMessage } from '../types/message';
 import { serializeMessage } from '../utils/dateUtils';
-import { sendMessage } from '../api/sendMessage';
+import { sendMessageStream } from '../api/sendMessageStream';
 import { sqlInjectionDetector } from '../utils/message/sqlInjectionDetector';
 
 export const useChat = () => {
@@ -14,38 +14,43 @@ export const useChat = () => {
 	const handleMessage = useCallback(
 		async (content: string) => {
 			if (!content.trim()) return;
-			if (sqlInjectionDetector(content) === true) return; // Prevent SQL injection attempts
+			if (sqlInjectionDetector(content)) return;
 
-			// Create and add user message
+			// Create and dispatch user message
 			const userMessage: IMessage = {
-				id: Date.now().toString().slice(5), // Generate a unique ID
-				auth: 'user-token', // Optional, can be removed if not needed
+				id: Date.now().toString().slice(5),
+				auth: 'user-token',
 				content: content.trim(),
 				sender: 'user',
 				timestamp: new Date()
 			};
 
 			dispatch(addMessage(serializeMessage(userMessage)));
-			// Set loading state while "waiting" for bot response
 			dispatch(setLoading(true));
 
-			const response: any = await sendMessage(userMessage);
-
+			// Create and dispatch empty bot message
 			const botMessage: IMessage = {
 				id: (Date.now() + 1).toString(),
-				auth: 'auth-token', // Optional, can be removed if not needed
-				content: response?.content || '',
+				auth: 'auth-token',
+				content: '',
 				sender: 'bot',
 				timestamp: new Date()
 			};
-
 			dispatch(addMessage(serializeMessage(botMessage)));
-			dispatch(setLoading(false));
+
+			try {
+				await sendMessageStream(userMessage, (partialText) => {
+					dispatch(updateLastBotMessage(partialText));
+				});
+			} catch (error) {
+				dispatch(setError((error as Error).message));
+			} finally {
+				dispatch(setLoading(false));
+			}
 		},
-		[dispatch]
+		[dispatch, messages]
 	);
 
-	// Clear all messages
 	const clearChat = useCallback(() => {
 		dispatch(clearMessages());
 	}, [dispatch]);
