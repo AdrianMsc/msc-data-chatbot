@@ -1,15 +1,33 @@
-import Chat from './components/layout/chat/Chat';
-import Footer from './components/layout/footer/Footer';
-import Header from './components/layout/header/Header';
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/Login/LoginPage";
+import ChatPage from "./pages/Chat/ChatPage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Forbidden from "./pages/Forbidden/Forbidden";
 
 const App = () => {
-	return (
-		<main className="flex flex-col justify-between h-screen">
-			<Header />
-			<Chat />
-			<Footer />
-		</main>
-	);
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/chat"
+        element={
+          <PrivateRoute>
+            <ChatPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <ChatPage />
+          </PrivateRoute>
+        }
+      />
+      <Route path="*" element={<Forbidden />} />
+      <Route path="/forbidden" element={<Forbidden />} />
+    </Routes>
+  );
 };
 
 export default App;

@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 @theme {
-	--color-mint-500: oklch(0.72 0.11 178);
+  --color-mint-500: oklch(0.72 0.11 178);
 }
 
 .markdown-body {
@@ -17,18 +17,18 @@
 /* ChatMessage.css */
 
 .chat-message {
-	/* start invisible & down */
-	opacity: 0;
-	transform: translateY(20px);
-	/* animate to final state */
-	animation: fadeInUp 0.4s ease-out forwards;
+  /* start invisible & down */
+  opacity: 0;
+  transform: translateY(20px);
+  /* animate to final state */
+  animation: fadeInUp 0.4s ease-out forwards;
 }
 
 @keyframes fadeInUp {
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* reset-normalize.css */
@@ -110,12 +110,12 @@ time,
 mark,
 audio,
 video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
-	vertical-align: baseline;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
 }
 
 /* 2. HTML5 display-role reset */
@@ -131,41 +131,41 @@ main,
 menu,
 nav,
 section {
-	display: block;
+  display: block;
 }
 
 /* 3. Normalize images, media */
 img,
 video {
-	max-width: 100%;
-	height: auto;
-	display: block;
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* 4. Remove list styles */
 ol,
 ul,
 menu {
-	list-style: none;
+  list-style: none;
 }
 
 /* 5. Reset quotes */
 blockquote,
 q {
-	quotes: none;
+  quotes: none;
 }
 blockquote::before,
 blockquote::after,
 q::before,
 q::after {
-	content: '';
-	content: none;
+  content: "";
+  content: none;
 }
 
 /* 6. Tables */
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 /* 7. Form elements inherit fonts */
@@ -173,20 +173,20 @@ button,
 input,
 select,
 textarea {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 /* 8. Remove built-in focus outline */
 :focus {
-	outline: none;
+  outline: none;
 }
 
 /* ————————————————————————————————————————————
@@ -195,17 +195,17 @@ textarea {
 
 /* Root typography & colors, support light/dark */
 :root {
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-	color: #000;
-	background-color: #f6f6f6;
+  color: #000;
+  background-color: #f6f6f6;
 
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }

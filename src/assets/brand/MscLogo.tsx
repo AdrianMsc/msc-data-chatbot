@@ -1,8 +1,13 @@
-const MscLogo = () => {
+import React from "react";
+
+interface LogoProps {
+  width?: number;
+}
+
+export const MscLogo: React.FC<LogoProps> = ({ width }) => {
   return (
     <svg
-      width="88"
-      height="24"
+      width={width}
       viewBox="0 0 88 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -16,5 +21,3 @@ const MscLogo = () => {
     </svg>
   );
 };
-
-export default MscLogo;
