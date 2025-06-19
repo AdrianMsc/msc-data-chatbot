@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { MscLogo } from "../../assets/brand/MscLogo";
 import AuthStatusAlert from "../../components/AuthStatusAlert/AuthStatusAlert";
 import type { RootState } from "../../store/store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -56,11 +58,15 @@ const LoginPage = () => {
           <h1 className="text-xl py-5 font-bold">Welcome</h1>
           <p className="pb-5 text-sm">Login to MSC Fuel Design System</p>
           <form onSubmit={handleSubmit} className="space-y-4 w-full">
-            <label className="flex flex-col gap-3">
+            <label className="flex flex-col gap-3 relative">
+              <FontAwesomeIcon
+                icon={faUser}
+                className=" text-monochromes-grey_xlight absolute top-4 left-3"
+              />
               <input
                 type="email"
                 placeholder="Username"
-                className="w-full p-2 border border-solid text-base rounded border-monochromes-grey_xlight px-4 py-3"
+                className="w-full p-2 border border-solid text-base rounded border-monochromes-grey_xlight px-8 py-3"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -70,11 +76,15 @@ const LoginPage = () => {
               </span>
             </label>
 
-            <label className="flex flex-col gap-3">
+            <label className="flex flex-col gap-3 relative">
+              <FontAwesomeIcon
+                icon={faLock}
+                className=" text-monochromes-grey_xlight absolute top-4 left-3"
+              />
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full p-2 border border-solid text-base rounded border-monochromes-grey_xlight"
+                className="w-full p-2 border border-solid text-base rounded border-monochromes-grey_xlight px-8 py-3"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -91,8 +101,12 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition"
+              disabled={loading || isAuthenticated}
+              className={`w-full py-2 rounded-full transition text-white ${
+                loading || isAuthenticated
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
             >
               {isAuthenticated
                 ? "Already logged in"
@@ -100,6 +114,7 @@ const LoginPage = () => {
                 ? "Loading..."
                 : "Login"}
             </button>
+
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <div className="text-sm flex justify-center gap-x-2 pt-6">
