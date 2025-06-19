@@ -5,7 +5,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const InputChat = () => {
   const [inputValue, setInputValue] = useState("");
-  const { sendMessage, isLoading } = useChat();
+  const { handleMessage, isLoading } = useChat();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
@@ -16,7 +16,7 @@ const InputChat = () => {
   const handleSubmit = (e: HandleSubmitEvent): void => {
     e.preventDefault();
     if (inputValue.trim() && !isLoading) {
-      sendMessage(inputValue);
+      handleMessage(inputValue);
       setInputValue(""); // Clear the input after sending
     }
   };
