@@ -1,11 +1,9 @@
 import { useState } from "react";
 import useChat from "../../../hooks/useChat";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const InputChat = () => {
   const [inputValue, setInputValue] = useState("");
-  const { sendMessage, isLoading } = useChat();
+  const { handleMessage, isLoading } = useChat();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
@@ -16,7 +14,7 @@ const InputChat = () => {
   const handleSubmit = (e: HandleSubmitEvent): void => {
     e.preventDefault();
     if (inputValue.trim() && !isLoading) {
-      sendMessage(inputValue);
+      handleMessage(inputValue);
       setInputValue(""); // Clear the input after sending
     }
   };
@@ -38,14 +36,10 @@ const InputChat = () => {
       <div className="flex flex-row items-center justify-end gap-2 w-full h-full">
         <button
           type="submit"
-          className="self-end px-4 py-2 w-fit h-fit bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed items-center justify-center flex"
+          className="self-end px-4 py-1 w-fit h-fit bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
           disabled={!inputValue.trim() || isLoading}
         >
-          {isLoading ? (
-            "Sending..."
-          ) : (
-            <FontAwesomeIcon icon={faPaperPlane} className=" text-white" />
-          )}
+          {isLoading ? "Sending..." : "Send"}
         </button>
       </div>
     </form>
