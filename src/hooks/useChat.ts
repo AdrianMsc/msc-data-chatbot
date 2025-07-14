@@ -4,7 +4,7 @@ import { addMessage, clearMessages, setError, setLoading, updateLastBotMessage }
 import type { RootState } from '../store/store';
 import type { IMessage } from '../types/message';
 import { serializeMessage } from '../utils/dateUtils';
-import { sendMessageStream } from '../api/sendMessageStream';
+import { sendMessageWs } from '../api/sendMessageWs';
 import { sqlInjectionDetector } from '../utils/message/sqlInjectionDetector';
 
 export const useChat = () => {
@@ -40,7 +40,7 @@ export const useChat = () => {
 
 			try {
 				let receivedFirstChunk = false;
-				await sendMessageStream(userMessage, (partialText) => {
+				await sendMessageWs(userMessage, (partialText) => {
 					dispatch(updateLastBotMessage(partialText));
 					if (!receivedFirstChunk) {
 						dispatch(setLoading(false));
