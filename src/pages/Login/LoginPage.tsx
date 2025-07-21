@@ -8,7 +8,6 @@ import AuthStatusAlert from '../../components/AuthStatusAlert/AuthStatusAlert';
 import type { RootState } from '../../store/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import useWs from '../../api/ws/getWs';
 
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
