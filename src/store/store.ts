@@ -4,16 +4,15 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import chatReducer from "./chatSlice";
 import authReducer from "./authSlice"; // Agregado para autenticación
 
-// Configure Redux Persist
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["chat", "auth"], // Persistimos también auth
+  whitelist: ["chat", "auth"],
 };
 
 const rootReducer = combineReducers({
   chat: chatReducer,
-  auth: authReducer, // Agregado aquí
+  auth: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
