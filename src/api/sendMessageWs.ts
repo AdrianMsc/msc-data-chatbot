@@ -11,7 +11,7 @@ import type { IMessage } from '../types/message';
 export const sendMessageWs = (
 	message: IMessage,
 	onChunk: (text: string) => void,
-	typingDelay = 20 // ms delay between characters
+	typingDelay = 10 // ms delay between characters
 ): Promise<string> => {
 	const socket = getWs();
 	if (!socket) {
