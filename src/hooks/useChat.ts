@@ -1,70 +1,86 @@
-import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, clearMessages, setError, setLoading, updateLastBotMessage } from '../store/chatSlice';
-import type { RootState } from '../store/store';
-import type { IMessage } from '../types/message';
-import { serializeMessage } from '../utils/dateUtils';
-import { sendMessageWs } from '../api/sendMessageWs';
-import { sqlInjectionDetector } from '../utils/message/sqlInjectionDetector';
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addMessage,
+  clearMessages,
+  setError,
+  setLoading,
+  updateLastBotMessage,
+} from "../store/chatSlice";
+import type { RootState } from "../store/store";
+import type { IMessage } from "../types/message";
+import { serializeMessage } from "../utils/dateUtils";
+// import { sendMessageWs } from "../api/sendMessageWs";
+import { startMessage } from "../api/cancelMessage";
+import { sqlInjectionDetector } from "../utils/message/sqlInjectionDetector";
+import { cancelMessage } from "../api/cancelMessage";
 
 export const useChat = () => {
-	const dispatch = useDispatch();
-	const { messages, isLoading, error } = useSelector((state: RootState) => state.chat);
+  const dispatch = useDispatch();
+  const { messages, isLoading, error } = useSelector(
+    (state: RootState) => state.chat
+  );
 
-	const handleMessage = useCallback(
-		async (content: string) => {
-			if (!content.trim()) return;
-			if (sqlInjectionDetector(content)) return;
+  const handleMessage = useCallback(
+    async (content: string) => {
+      if (!content.trim()) return;
+      if (sqlInjectionDetector(content)) return;
 
-			// Create and dispatch user message
-			const userMessage: IMessage = {
-				id: Date.now().toString().slice(5),
-				auth: 'user-token',
-				content: content.trim(),
-				sender: 'user',
-				timestamp: new Date()
-			};
+      const userMessage: IMessage = {
+        id: Date.now().toString().slice(5),
+        auth: "user-token",
+        content: content.trim(),
+        sender: "user",
+        timestamp: new Date(),
+      };
 
-			dispatch(addMessage(serializeMessage(userMessage)));
-			dispatch(setLoading(true));
+      dispatch(addMessage(serializeMessage(userMessage)));
+      dispatch(setLoading(true));
 
-			// Create and dispatch empty bot message
-			const botMessage: IMessage = {
-				id: (Date.now() + 1).toString(),
-				auth: 'auth-token',
-				content: '',
-				sender: 'bot',
-				timestamp: new Date()
-			};
-			dispatch(addMessage(serializeMessage(botMessage)));
+      const botMessage: IMessage = {
+        id: (Date.now() + 1).toString(),
+        auth: "auth-token",
+        content: "",
+        sender: "bot",
+        timestamp: new Date(),
+      };
+      dispatch(addMessage(serializeMessage(botMessage)));
 
-			try {
-				let receivedFirstChunk = false;
-				await sendMessageWs(userMessage, (partialText) => {
-					dispatch(updateLastBotMessage(partialText));
-					if (!receivedFirstChunk) {
-						dispatch(setLoading(false));
-						receivedFirstChunk = true;
-					}
-				});
-			} catch (error) {
-				dispatch(setError((error as Error).message));
-			}
-		},
-		[dispatch, messages]
-	);
+      try {
+        let receivedFirstChunk = false;
 
-	const clearChat = useCallback(() => {
-		dispatch(clearMessages());
-	}, [dispatch]);
+        await startMessage(
+          userMessage,
+          (partialText) => {
+            dispatch(updateLastBotMessage(partialText));
+            if (!receivedFirstChunk) {
+              dispatch(setLoading(false));
+              receivedFirstChunk = true;
+            }
+          },
+          () => {
+            dispatch(setLoading(false)); // Se asegura que loading siempre se apague
+          }
+        );
+      } catch (error) {
+        dispatch(setError((error as Error).message));
+      }
+    },
+    [dispatch, messages]
+  );
 
-	return {
-		messages,
-		isLoading,
-		error,
-		handleMessage,
-		clearChat
-	};
+  const clearChat = useCallback(() => {
+    dispatch(clearMessages());
+  }, [dispatch]);
+
+  return {
+    messages,
+    isLoading,
+    error,
+    handleMessage,
+    clearChat,
+    cancelMessage,
+  };
 };
 
 export default useChat;
