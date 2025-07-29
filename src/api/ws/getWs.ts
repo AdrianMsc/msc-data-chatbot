@@ -1,12 +1,9 @@
 // src/hooks/useChatWs.ts
 import { Manager } from 'socket.io-client';
-import { store } from '../../store/store';
 
 export const getWs = () => {
-	const token = store.getState().auth.token;
 	const manager = new Manager('http://localhost:3000/chat', {
-		transports: ['websocket'],
-		query: { token }
+		transports: ['websocket']
 	});
 
 	const socket = manager.socket('/chat');
