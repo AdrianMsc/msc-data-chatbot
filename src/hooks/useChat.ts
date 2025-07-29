@@ -9,6 +9,7 @@ import { sqlInjectionDetector } from '../utils/message/sqlInjectionDetector';
 
 export const useChat = () => {
 	const dispatch = useDispatch();
+	const authToken = useSelector((state: RootState) => state.auth.token);
 	const { messages, isLoading, error } = useSelector((state: RootState) => state.chat);
 
 	const handleMessage = useCallback(
@@ -17,9 +18,10 @@ export const useChat = () => {
 			if (sqlInjectionDetector(content)) return;
 
 			// Create and dispatch user message
+			console.log(authToken);
 			const userMessage: IMessage = {
 				id: Date.now().toString().slice(5),
-				auth: 'user-token',
+				authToken: authToken!,
 				content: content.trim(),
 				sender: 'user',
 				timestamp: new Date()
@@ -31,7 +33,7 @@ export const useChat = () => {
 			// Create and dispatch empty bot message
 			const botMessage: IMessage = {
 				id: (Date.now() + 1).toString(),
-				auth: 'auth-token',
+				authToken: authToken!,
 				content: '',
 				sender: 'bot',
 				timestamp: new Date()
