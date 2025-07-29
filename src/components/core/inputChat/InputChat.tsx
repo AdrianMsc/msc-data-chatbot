@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faStop } from '@fortawesome/free-solid-svg-icons';
 import useChat from '../../../hooks/useChat';
+import { cancelMessage } from '../../../api/cancelMessage';
 
 const InputChat = () => {
 	const [inputValue, setInputValue] = useState('');
@@ -38,17 +39,24 @@ const InputChat = () => {
 					}
 				}}
 			/>
-			<button
-				type="submit"
-				className="absolute bottom-3 right-4 px-4 py-1 bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
-				disabled={!inputValue.trim() || isLoading}
-			>
-				{isLoading ? (
-					<FontAwesomeIcon icon={faSpinner} className="animate-spin" />
-				) : (
+
+			{isLoading ? (
+				<button
+					type="button" // 🔥 Cambiado a "button" para que NO dispare el submit del formulario
+					onClick={cancelMessage} // ✅ Aquí va la magia
+					className="absolute bottom-3 right-4 px-4 py-1 bg-red-600 text-white border-none rounded-full cursor-pointer font-semibold hover:bg-red-800 transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+				>
+					<FontAwesomeIcon icon={faStop} />
+				</button>
+			) : (
+				<button
+					type="submit"
+					className="absolute bottom-3 right-4 px-4 py-1 bg-primary-blue text-white border-none rounded-full cursor-pointer font-semibold hover:bg-primary-blue_dark transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+					disabled={!inputValue.trim() || isLoading}
+				>
 					<FontAwesomeIcon icon={faPaperPlane} />
-				)}
-			</button>
+				</button>
+			)}
 		</form>
 	);
 };

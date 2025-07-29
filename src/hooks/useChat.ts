@@ -4,8 +4,10 @@ import { addMessage, clearMessages, setError, setLoading, updateLastBotMessage }
 import type { RootState } from '../store/store';
 import type { IMessage } from '../types/message';
 import { serializeMessage } from '../utils/dateUtils';
-import { sendMessageWs } from '../api/sendMessageWs';
+// import { sendMessageWs } from "../api/sendMessageWs";
+import { startMessage } from '../api/cancelMessage';
 import { sqlInjectionDetector } from '../utils/message/sqlInjectionDetector';
+import { cancelMessage } from '../api/cancelMessage';
 
 export const useChat = () => {
 	const dispatch = useDispatch();
@@ -17,8 +19,6 @@ export const useChat = () => {
 			if (!content.trim()) return;
 			if (sqlInjectionDetector(content)) return;
 
-			// Create and dispatch user message
-			console.log(authToken);
 			const userMessage: IMessage = {
 				id: Date.now().toString().slice(5),
 				authToken: authToken!,
@@ -30,7 +30,6 @@ export const useChat = () => {
 			dispatch(addMessage(serializeMessage(userMessage)));
 			dispatch(setLoading(true));
 
-			// Create and dispatch empty bot message
 			const botMessage: IMessage = {
 				id: (Date.now() + 1).toString(),
 				authToken: authToken!,
@@ -41,14 +40,15 @@ export const useChat = () => {
 			dispatch(addMessage(serializeMessage(botMessage)));
 
 			try {
-				let receivedFirstChunk = false;
-				await sendMessageWs(userMessage, (partialText) => {
-					dispatch(updateLastBotMessage(partialText));
-					if (!receivedFirstChunk) {
-						dispatch(setLoading(false));
-						receivedFirstChunk = true;
+				await startMessage(
+					userMessage,
+					(partialText) => {
+						dispatch(updateLastBotMessage(partialText));
+					},
+					() => {
+						dispatch(setLoading(false)); // Se asegura que loading siempre se apague
 					}
-				});
+				);
 			} catch (error) {
 				dispatch(setError((error as Error).message));
 			}
@@ -65,7 +65,8 @@ export const useChat = () => {
 		isLoading,
 		error,
 		handleMessage,
-		clearChat
+		clearChat,
+		cancelMessage
 	};
 };
 
