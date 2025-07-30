@@ -15,7 +15,6 @@ const Header: React.FC = () => {
 				<MscLogo width={100} />
 			</div>
 			<div className="flex items-center gap-5">
-				<h1>(Development)</h1>
 				{messages.length > 0 && (
 					<button
 						type="button"

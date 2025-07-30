@@ -5,12 +5,14 @@ import type { IMessage } from '../types/message';
 interface ChatState {
 	messages: IMessage[];
 	isLoading: boolean;
+	isWriting: boolean;
 	error: string | null;
 }
 
 const initialState: ChatState = {
 	messages: [],
 	isLoading: false,
+	isWriting: false,
 	error: null
 };
 
@@ -38,12 +40,16 @@ export const chatSlice = createSlice({
 		setLoading: (state, action: PayloadAction<boolean>) => {
 			state.isLoading = action.payload;
 		},
+		setWriting: (state, action: PayloadAction<boolean>) => {
+			state.isWriting = action.payload;
+		},
 		setError: (state, action: PayloadAction<string | null>) => {
 			state.error = action.payload;
 		}
 	}
 });
 
-export const { addMessage, setMessages, updateLastBotMessage, clearMessages, setLoading, setError } = chatSlice.actions;
+export const { addMessage, setMessages, updateLastBotMessage, clearMessages, setLoading, setWriting, setError } =
+	chatSlice.actions;
 
 export default chatSlice.reducer;

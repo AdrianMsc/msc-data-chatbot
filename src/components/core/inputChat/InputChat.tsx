@@ -6,7 +6,7 @@ import { cancelMessage } from '../../../api/cancelMessage';
 
 const InputChat = () => {
 	const [inputValue, setInputValue] = useState('');
-	const { handleMessage, isLoading } = useChat();
+	const { handleMessage, isLoading, isWriting } = useChat();
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
 		setInputValue(e.target.value);
@@ -40,7 +40,7 @@ const InputChat = () => {
 				}}
 			/>
 
-			{isLoading ? (
+			{isLoading || isWriting ? (
 				<button
 					type="button" // 🔥 Cambiado a "button" para que NO dispare el submit del formulario
 					onClick={cancelMessage} // ✅ Aquí va la magia

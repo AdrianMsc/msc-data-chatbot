@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, clearMessages, setError, setLoading, updateLastBotMessage } from '../store/chatSlice';
+import { addMessage, clearMessages, setError, setLoading, setWriting, updateLastBotMessage } from '../store/chatSlice';
 import type { RootState } from '../store/store';
 import type { IMessage } from '../types/message';
 import { serializeMessage } from '../utils/dateUtils';
@@ -12,7 +12,7 @@ import { cancelMessage } from '../api/cancelMessage';
 export const useChat = () => {
 	const dispatch = useDispatch();
 	const authToken = useSelector((state: RootState) => state.auth.token);
-	const { messages, isLoading, error } = useSelector((state: RootState) => state.chat);
+	const { messages, isLoading, error, isWriting } = useSelector((state: RootState) => state.chat);
 
 	const handleMessage = useCallback(
 		async (content: string) => {
@@ -40,6 +40,7 @@ export const useChat = () => {
 			dispatch(addMessage(serializeMessage(botMessage)));
 
 			try {
+				dispatch(setWriting(true));
 				await startMessage(
 					userMessage,
 					(partialText) => {
@@ -49,7 +50,9 @@ export const useChat = () => {
 						dispatch(setLoading(false)); // Se asegura que loading siempre se apague
 					}
 				);
+				dispatch(setWriting(false));
 			} catch (error) {
+				dispatch(setWriting(false));
 				dispatch(setError((error as Error).message));
 			}
 		},
@@ -64,6 +67,7 @@ export const useChat = () => {
 		messages,
 		isLoading,
 		error,
+		isWriting,
 		handleMessage,
 		clearChat,
 		cancelMessage
