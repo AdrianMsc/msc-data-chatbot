@@ -1,6 +1,7 @@
 // src/hooks/useChatWs.ts
 import { Manager } from 'socket.io-client';
 import { store } from '../../store/store';
+import { setOffline, setOnline } from '../../store/connectionSlice';
 
 export const getWs = () => {
 	const token = store.getState().auth.token;
@@ -12,13 +13,14 @@ export const getWs = () => {
 	const socket = manager.socket('/chat');
 
 	socket.on('connect', () => {
-		console.log('Connected to WebSocket server');
+		store.dispatch(setOnline());
 	});
 	socket.on('disconnect', () => {
-		console.log('Disconnected from WebSocket server');
+		store.dispatch(setOffline());
 	});
 	socket.on('error', (error) => {
 		console.error('WebSocket error:', error);
+		store.dispatch(setOffline());
 	});
 
 	return socket;

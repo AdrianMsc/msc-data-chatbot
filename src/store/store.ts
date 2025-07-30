@@ -1,35 +1,37 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import chatReducer from "./chatSlice";
-import authReducer from "./authSlice"; // Agregado para autenticación
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import chatReducer from './chatSlice';
+import authReducer from './authSlice'; // Agregado para autenticación
+import connectionReducer from './connectionSlice';
 
 const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["chat", "auth"],
+	key: 'root',
+	storage,
+	whitelist: ['chat', 'auth', 'connection']
 };
 
 const rootReducer = combineReducers({
-  chat: chatReducer,
-  auth: authReducer,
+	chat: chatReducer,
+	auth: authReducer,
+	connection: connectionReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
-        // Ignore these field paths in all actions
-        ignoredActionPaths: ["meta.arg", "payload.timestamp"],
-        // Ignore these paths in the state
-        ignoredPaths: ["chat.messages"],
-      },
-    }),
+	reducer: persistedReducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				// Ignore these action types
+				ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+				// Ignore these field paths in all actions
+				ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+				// Ignore these paths in the state
+				ignoredPaths: ['chat.messages']
+			}
+		})
 });
 
 export const persistor = persistStore(store);

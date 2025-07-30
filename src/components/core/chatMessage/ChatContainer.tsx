@@ -4,10 +4,14 @@ import ChatMessage from './ChatMessage';
 import useChat from '../../../hooks/useChat';
 import { deserializeMessage } from '../../../utils/dateUtils';
 import FaqContainer from '../faq/FaqContainer';
+import ConnectionLost from '../../ConnectionLost/ConnectionLost';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../store/store';
 
 const ChatContainer = () => {
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 	const { messages, isLoading } = useChat();
+	const isOnline = useSelector((state: RootState) => state.connection.isOnline);
 
 	useEffect(() => {
 		// Scroll to bottom when messages change
@@ -34,6 +38,7 @@ const ChatContainer = () => {
 				})
 			)}
 			{isLoading && <div className="self-start px-3 py-2 bg-gray-100 rounded-lg animate-pulse">Thinking...</div>}
+			{!isOnline && <ConnectionLost />}
 		</div>
 	);
 };
