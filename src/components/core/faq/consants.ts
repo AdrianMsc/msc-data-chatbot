@@ -8,15 +8,7 @@ export const faqsMock = [
 		description: 'Share me the link of purchases by month dashboard'
 	},
 	{
-		title: 'Clients Dashboard',
-		description: 'Share me the link of clients dashboard'
-	},
-	{
-		title: 'Products Dashboard',
-		description: 'Share me the link of products dashboard'
-	},
-	{
-		title: 'Users Dashboard',
-		description: 'Share me the link of users dashboard'
+		title: 'Locations',
+		description: 'Share me the link of locations dashboard'
 	}
 ];
