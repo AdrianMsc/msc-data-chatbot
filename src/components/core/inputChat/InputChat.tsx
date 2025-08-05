@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faStop } from '@fortawesome/free-solid-svg-icons';
 import useChat from '../../../hooks/useChat';
 import { cancelMessage } from '../../../api/cancelMessage';
+import { useChatContext } from '../../../context/ChatContext';
 
 const InputChat = () => {
-	const [inputValue, setInputValue] = useState('');
+	const { inputValue, setInputValue } = useChatContext();
 	const { handleMessage, isLoading, isWriting } = useChat();
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
